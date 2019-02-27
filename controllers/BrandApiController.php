@@ -56,6 +56,21 @@ class BrandApiController extends Controller {
         $response = $res ? [] : [500, '添加失败'];
         return $this->response(...$response);
     }
+    
+    public function actionEdit(){
+        $table = $this->param['table'];
+        $pk = $this->param['pk'];
+        $id = $this->param['id'];
+        $column = $this->param['column'];
+        $data = $this->param['data'];
+        $res = Yii::$app->db->createCommand()->update($table, [
+            $column => $data
+        ], [
+            $pk => $id
+        ])->execute();
+        $response = $res ? [] : [500, '添加失败'];
+        return $this->response(...$response);
+    }
 
     public function response($code = 200, $msg = 'ok', $data = []) {
         echo json_encode([
